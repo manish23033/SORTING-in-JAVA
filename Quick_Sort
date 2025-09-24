@@ -1,0 +1,58 @@
+public class QuickSortRecursive {
+
+    // Recursive Quick Sort function
+    public static void quickSort(int[] arr, int low, int high) {
+        if (low < high) {
+            // Find pivot index after partition
+            int pivotIndex = partition(arr, low, high);
+
+            // Recursively sort left half
+            quickSort(arr, low, pivotIndex - 1);
+
+            // Recursively sort right half
+            quickSort(arr, pivotIndex + 1, high);
+        }
+    }
+
+    // Partition function (Lomuto partition scheme)
+    private static int partition(int[] arr, int low, int high) {
+        int pivot = arr[high];  // Choosing last element as pivot
+        int i = (low - 1);
+
+        for (int j = low; j < high; j++) {
+            if (arr[j] <= pivot) {
+                i++;
+                // Swap arr[i] and arr[j]
+                int temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+            }
+        }
+
+        // Swap pivot into correct position
+        int temp = arr[i + 1];
+        arr[i + 1] = arr[high];
+        arr[high] = temp;
+
+        return i + 1;
+    }
+
+    // Main function
+    public static void main(String[] args) {
+        int[] arr = {10, 7, 8, 9, 1, 5};
+        int n = arr.length;
+
+        System.out.println("Original Array:");
+        for (int num : arr) {
+            System.out.print(num + " ");
+        }
+
+        // Call recursive quickSort
+        quickSort(arr, 0, n - 1);
+
+        System.out.println("\nSorted Array:");
+        for (int num : arr) {
+            System.out.print(num + " ");
+        }
+    }
+}

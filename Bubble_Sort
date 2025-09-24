@@ -1,0 +1,40 @@
+public class BubbleSortRecursive {
+
+    // Recursive Bubble Sort function
+    public static void bubbleSort(int[] arr, int n) {
+        // Base case: if size is 1, array is already sorted
+        if (n == 1) {
+            return;
+        }
+
+        // One pass of bubble sort: largest element moves to end
+        for (int i = 0; i < n - 1; i++) {
+            if (arr[i] > arr[i + 1]) {
+                // Swap arr[i] and arr[i+1]
+                int temp = arr[i];
+                arr[i] = arr[i + 1];
+                arr[i + 1] = temp;
+            }
+        }
+
+        // Recursive call for remaining (n-1) elements
+        bubbleSort(arr, n - 1);
+    }
+
+    public static void main(String[] args) {
+        int[] arr = {5, 1, 4, 2, 8};
+        int n = arr.length;
+
+        System.out.println("Original Array:");
+        for (int num : arr) {
+            System.out.print(num + " ");
+        }
+
+        bubbleSort(arr, n);
+
+        System.out.println("\nSorted Array:");
+        for (int num : arr) {
+            System.out.print(num + " ");
+        }
+    }
+}

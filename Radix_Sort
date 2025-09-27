@@ -1,0 +1,65 @@
+import java.util.Arrays;
+
+public class RadixSort {
+    
+    // Function to get the maximum value in an array
+    static int getMax(int arr[]) {
+        int max = arr[0];
+        for (int num : arr) {
+            if (num > max) {
+                max = num;
+            }
+        }
+        return max;
+    }
+
+    // Counting sort used by Radix sort
+    static void countingSort(int arr[], int exp) {
+        int n = arr.length;
+        int output[] = new int[n]; // Output array
+        int count[] = new int[10]; // For digits 0-9
+
+        // Count occurrences of digits
+        for (int i = 0; i < n; i++) {
+            int index = (arr[i] / exp) % 10;
+            count[index]++;
+        }
+
+        // Change count[i] so that it contains actual position
+        for (int i = 1; i < 10; i++) {
+            count[i] += count[i - 1];
+        }
+
+        // Build output array (stable sort)
+        for (int i = n - 1; i >= 0; i--) {
+            int index = (arr[i] / exp) % 10;
+            output[count[index] - 1] = arr[i];
+            count[index]--;
+        }
+
+        // Copy output back to arr
+        for (int i = 0; i < n; i++) {
+            arr[i] = output[i];
+        }
+    }
+
+    // Main function for Radix sort
+    static void radixSort(int arr[]) {
+        int max = getMax(arr);
+
+        // Apply counting sort for each digit (exp = 1, 10, 100, ...)
+        for (int exp = 1; max / exp > 0; exp *= 10) {
+            countingSort(arr, exp);
+        }
+    }
+
+    // Driver code
+    public static void main(String[] args) {
+        int arr[] = {170, 45, 75, 90, 802, 24, 2, 66};
+        System.out.println("Original Array: " + Arrays.toString(arr));
+        
+        radixSort(arr);
+        
+        System.out.println("Sorted Array:   " + Arrays.toString(arr));
+    }
+}
